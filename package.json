@@ -1,0 +1,47 @@
+{
+  "name": "speed-test",
+  "version": "0.0.0",
+  "description": "Test your internet connection speed and ping using speedtest.net from the CLI",
+  "license": "MIT",
+  "repository": "sindresorhus/speed-test",
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com"
+  },
+  "bin": "cli.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "xo && node test.js"
+  },
+  "files": [
+    "cli.js"
+  ],
+  "keywords": [
+    "cli-app",
+    "cli",
+    "speed",
+    "test",
+    "tester",
+    "speed-test",
+    "speedtest",
+    "connection",
+    "internet",
+    "bandwidth",
+    "ping",
+    "measure",
+    "check"
+  ],
+  "dependencies": {
+    "chalk": "^1.1.0",
+    "meow": "^3.3.0",
+    "round-to": "^1.0.0",
+    "speedtest-net": "^1.0.3"
+  },
+  "devDependencies": {
+    "ava": "0.0.4",
+    "xo": "*"
+  }
+}
