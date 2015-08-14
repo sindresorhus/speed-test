@@ -2,7 +2,7 @@
 
 > Test your internet connection speed and ping using [speedtest.net](http://www.speedtest.net) from the CLI
 
-![](screenshot.png)
+![](screenshot.gif)
 
 
 ## Install
