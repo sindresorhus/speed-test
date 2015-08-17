@@ -46,16 +46,19 @@ setInterval(render, 50);
 st.once('testserver', function (server) {
 	state = 'download';
 	stats.ping = chalk.cyan(Math.round(server.bestPing) + chalk.dim(' ms'));
+	stats.ping = chalk.bold(stats.ping);
 });
 
 st.once('downloadspeed', function (speed) {
 	state = 'upload';
 	stats.download = chalk.cyan(roundTo(speed, 1) + chalk.dim(' Mbps'));
+	stats.download = chalk.bold(stats.download);
 });
 
 st.once('uploadspeed', function (speed) {
 	state = '';
 	stats.upload = chalk.cyan(roundTo(speed, 1) + chalk.dim(' Mbps'));
+	stats.upload = chalk.bold(stats.upload);
 	render();
 	process.exit();
 });
