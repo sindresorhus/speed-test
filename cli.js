@@ -11,7 +11,9 @@ var elegantSpinner = require('elegant-spinner');
 var cli = meow({
 	help: [
 		'Usage',
-		'  $ speed-test'
+		'  $ speed-test',
+		'Flags',
+		'  --json'
 	]
 });
 
@@ -31,6 +33,11 @@ function getSpinner(x) {
 }
 
 function render() {
+	if (cli.flags.json) {
+		logUpdate(JSON.stringify(stats));
+		return;
+	}
+
 	logUpdate([
 		'',
 		'      Ping  ' + stats.ping + getSpinner('ping'),
@@ -41,21 +48,21 @@ function render() {
 
 var st = speedtest({maxTime: 20000});
 
-setInterval(render, 50);
+if (!cli.flags.json) setInterval(render, 50);
 
 st.once('testserver', function (server) {
 	state = 'download';
-	stats.ping = chalk.cyan(Math.round(server.bestPing) + chalk.dim(' ms'));
+	stats.ping = (cli.flags.json) ? Math.round(server.bestPing) : chalk.cyan(Math.round(server.bestPing) + chalk.dim(' ms'));
 });
 
 st.once('downloadspeed', function (speed) {
 	state = 'upload';
-	stats.download = chalk.cyan(roundTo(speed, 1) + chalk.dim(' Mbps'));
+	stats.download = (cli.flags.json) ? roundTo(speed, 1) : chalk.cyan(roundTo(speed, 1) + chalk.dim(' Mbps'));
 });
 
 st.once('uploadspeed', function (speed) {
 	state = '';
-	stats.upload = chalk.cyan(roundTo(speed, 1) + chalk.dim(' Mbps'));
+	stats.upload = (cli.flags.json) ? roundTo(speed, 1) : chalk.cyan(roundTo(speed, 1) + chalk.dim(' Mbps'));
 	render();
 	process.exit();
 });
