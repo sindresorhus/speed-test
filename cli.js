@@ -48,7 +48,9 @@ function render() {
 
 var st = speedtest({maxTime: 20000});
 
-if (!cli.flags.json) setInterval(render, 50);
+if (!cli.flags.json) {
+	setInterval(render, 50);
+}
 
 st.once('testserver', function (server) {
 	state = 'download';
