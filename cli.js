@@ -34,7 +34,7 @@ function getSpinner(x) {
 
 function render() {
 	if (cli.flags.json) {
-		logUpdate(JSON.stringify(stats));
+		console.log(JSON.stringify(stats));
 		return;
 	}
 
