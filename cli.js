@@ -54,17 +54,20 @@ if (!cli.flags.json) {
 
 st.once('testserver', function (server) {
 	state = 'download';
-	stats.ping = (cli.flags.json) ? Math.round(server.bestPing) : chalk.cyan(Math.round(server.bestPing) + chalk.dim(' ms'));
+	var ping = Math.round(server.bestPing);
+	stats.ping = (cli.flags.json) ? ping : chalk.cyan(ping + chalk.dim(' ms'));
 });
 
 st.once('downloadspeed', function (speed) {
 	state = 'upload';
-	stats.download = (cli.flags.json) ? roundTo(speed, 1) : chalk.cyan(roundTo(speed, 1) + chalk.dim(' Mbps'));
+	var download = roundTo(speed, 1);
+	stats.download = (cli.flags.json) ? download : chalk.cyan(download + chalk.dim(' Mbps'));
 });
 
 st.once('uploadspeed', function (speed) {
 	state = '';
-	stats.upload = (cli.flags.json) ? roundTo(speed, 1) : chalk.cyan(roundTo(speed, 1) + chalk.dim(' Mbps'));
+	var upload = roundTo(speed, 1);
+	stats.upload = (cli.flags.json) ? upload : chalk.cyan(upload + chalk.dim(' Mbps'));
 	render();
 	process.exit();
 });
