@@ -12,8 +12,8 @@ var cli = meow({
 	help: [
 		'Usage',
 		'  $ speed-test',
-		'Flags',
-		'  --json'
+		'Options',
+		'  --json  Outputs the result in JSON'
 	]
 });
 

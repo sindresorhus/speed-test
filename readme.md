@@ -19,6 +19,8 @@ $ speed-test --help
 
   Usage
     $ speed-test
+  Options
+    --json  Outputs the result in JSON
 ```
 
 
