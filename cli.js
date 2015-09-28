@@ -41,9 +41,9 @@ function render() {
 
 	logUpdate([
 		'',
-		getSpinner('ping') +		'     Ping ' + stats.ping,
-		getSpinner('download') + 	' Download ' + stats.download,
-		getSpinner('upload') +		'   Upload ' + stats.upload
+		getSpinner('ping') +		'     Ping  ' + stats.ping,
+		getSpinner('download') + 	' Download  ' + stats.download,
+		getSpinner('upload') +		'   Upload  ' + stats.upload
 	].join('\n'));
 }
 
