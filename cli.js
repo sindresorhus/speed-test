@@ -60,16 +60,16 @@ st.once('testserver', function (server) {
 });
 
 st.on('downloadspeedprogress', function (speed) {
-	if (state === 'download') {
+	if (state === 'download' && cli.flags.json !== true) {
 		var download = roundTo(speed, 1);
-		stats.download = (cli.flags.json) ? download : chalk.yellow(download + chalk.dim(' Mbps'));
+		stats.download = chalk.yellow(download + chalk.dim(' Mbps'));
 	}
 });
 
 st.on('uploadspeedprogress', function (speed) {
-	if (state === 'upload') {
+	if (state === 'upload' && cli.flags.json !== true) {
 		var upload = roundTo(speed, 1);
-		stats.upload = (cli.flags.json) ? upload : chalk.yellow(upload + chalk.dim(' Mbps'));
+		stats.upload = chalk.yellow(upload + chalk.dim(' Mbps'));
 	}
 });
 
