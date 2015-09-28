@@ -30,7 +30,7 @@ var state = 'ping';
 var frame = elegantSpinner();
 
 function getSpinner(x) {
-	return state === x ? chalk.cyan.dim(frame()) : ' ';
+	return state === x ? chalk.cyan.dim(frame()) : '';
 }
 
 function render() {
@@ -41,9 +41,9 @@ function render() {
 
 	logUpdate([
 		'',
-		getSpinner('ping') +		'     Ping  ' + stats.ping,
-		getSpinner('download') + 	' Download  ' + stats.download,
-		getSpinner('upload') +		'   Upload  ' + stats.upload
+		'      Ping  ' + getSpinner('ping') + stats.ping,
+		'  Download  ' + stats.download,
+		'    Upload  ' + stats.upload
 	].join('\n'));
 }
 
