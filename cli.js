@@ -30,7 +30,7 @@ var state = 'ping';
 var frame = elegantSpinner();
 
 function getSpinner(x) {
-	return state === x ? chalk.cyan.dim(frame()) : '';
+	return state === x ? chalk.gray.dim(frame()) : ' ';
 }
 
 function render() {
@@ -41,10 +41,18 @@ function render() {
 
 	logUpdate([
 		'',
-		'      Ping  ' + stats.ping + getSpinner('ping'),
-		'  Download  ' + stats.download + getSpinner('download'),
-		'    Upload  ' + stats.upload + getSpinner('upload')
+		'      Ping ' + getSpinner('ping') + ' ' + stats.ping,
+		'  Download ' + getSpinner('download') + ' ' + stats.download,
+		'    Upload ' + getSpinner('upload') + ' ' + stats.upload
 	].join('\n'));
+}
+
+function setState(s) {
+	state = s;
+
+	if (s && s.length > 0) {
+		stats[s] = chalk.yellow('0' + chalk.dim(' Mbps'));
+	}
 }
 
 var st = speedtest({maxTime: 20000});
@@ -54,19 +62,33 @@ if (!cli.flags.json) {
 }
 
 st.once('testserver', function (server) {
-	state = 'download';
+	setState('download');
 	var ping = Math.round(server.bestPing);
 	stats.ping = (cli.flags.json) ? ping : chalk.cyan(ping + chalk.dim(' ms'));
 });
 
+st.on('downloadspeedprogress', function (speed) {
+	if (state === 'download' && cli.flags.json !== true) {
+		var download = roundTo(speed, 1);
+		stats.download = chalk.yellow(download + chalk.dim(' Mbps'));
+	}
+});
+
+st.on('uploadspeedprogress', function (speed) {
+	if (state === 'upload' && cli.flags.json !== true) {
+		var upload = roundTo(speed, 1);
+		stats.upload = chalk.yellow(upload + chalk.dim(' Mbps'));
+	}
+});
+
 st.once('downloadspeed', function (speed) {
-	state = 'upload';
+	setState('upload');
 	var download = roundTo(speed, 1);
 	stats.download = (cli.flags.json) ? download : chalk.cyan(download + chalk.dim(' Mbps'));
 });
 
 st.once('uploadspeed', function (speed) {
-	state = '';
+	setState('');
 	var upload = roundTo(speed, 1);
 	stats.upload = (cli.flags.json) ? upload : chalk.cyan(upload + chalk.dim(' Mbps'));
 	render();
