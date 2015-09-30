@@ -29,7 +29,7 @@ test('--json', function (t) {
 	cp.stdout.on('data', function (data) {
 		data = JSON.parse(data.toString('utf8'));
 
-		if (data.ping === undefined || data.upload === undefined || data.download === undefined || data.upload !== undefined) {
+		if (data.ping === undefined || data.upload === undefined || data.download === undefined || data.data !== undefined) {
 			cp.kill('SIGHUP');
 		}
 	});
@@ -50,10 +50,10 @@ test('--verbose --json', function (t) {
 		cwd: __dirname
 	});
 
-	cp.on('data', function (data) {
+	cp.stdout.on('data', function (data) {
 		data = JSON.parse(data.toString('utf8'));
 
-		if (data.ping === undefined || data.upload === undefined || data.download === undefined || data.upload === undefined) {
+		if (data.ping === undefined || data.upload === undefined || data.download === undefined || data.data === undefined) {
 			cp.kill('SIGHUP');
 		}
 	});
