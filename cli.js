@@ -14,7 +14,8 @@ var cli = meow({
 		'  $ speed-test',
 		'',
 		'Options',
-		'  --json  Output the result as JSON'
+		'  --json     Output the result as JSON',
+		'  --verbose  Output more detailed information'
 	]
 });
 
@@ -39,12 +40,23 @@ function render() {
 		return;
 	}
 
-	logUpdate([
+	var output = [
 		'',
 		'      Ping ' + getSpinner('ping') + ' ' + stats.ping,
 		'  Download ' + getSpinner('download') + ' ' + stats.download,
 		'    Upload ' + getSpinner('upload') + ' ' + stats.upload
-	].join('\n'));
+	];
+
+	if (cli.flags.verbose && stats.data) {
+		output = output.concat([
+			'',
+			'    Server   ' + chalk.cyan(stats.data.server.host),
+			'  Location   ' + chalk.cyan(stats.data.server.location + chalk.dim(' (' + stats.data.server.country + ')')),
+			'  Distance   ' + chalk.cyan(stats.data.server.distance + chalk.dim(' km'))
+		]);
+	}
+
+	logUpdate(output.join('\n'));
 }
 
 function setState(s) {
@@ -91,7 +103,16 @@ st.once('uploadspeed', function (speed) {
 	setState('');
 	var upload = roundTo(speed, 1);
 	stats.upload = (cli.flags.json) ? upload : chalk.cyan(upload + chalk.dim(' Mbps'));
+});
+
+st.on('data', function (data) {
+	if (cli.flags.verbose) {
+		stats.data = data;
+	}
 	render();
+});
+
+st.on('done', function () {
 	process.exit();
 });
 
