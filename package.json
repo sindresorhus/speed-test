@@ -14,7 +14,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "xo && node test.js"
+    "test": "xo && ava"
   },
   "files": [
     "cli.js"
@@ -44,7 +44,7 @@
     "update-notifier": "^0.5.0"
   },
   "devDependencies": {
-    "ava": "^0.2.0",
+    "ava": "*",
     "xo": "*"
   }
 }
