@@ -7,6 +7,7 @@ var roundTo = require('round-to');
 var chalk = require('chalk');
 var logUpdate = require('log-update');
 var elegantSpinner = require('elegant-spinner');
+var url = require('url');
 
 var cli = meow({
 	help: [
@@ -52,7 +53,7 @@ function render() {
 			'',
 			'    Server   ' + chalk.cyan(stats.data.server.host),
 			'  Location   ' + chalk.cyan(stats.data.server.location + chalk.dim(' (' + stats.data.server.country + ')')),
-			'  Distance   ' + chalk.cyan(stats.data.server.distance + chalk.dim(' km'))
+			'  Distance   ' + chalk.cyan(roundTo(stats.data.server.distance, 1) + chalk.dim(' km'))
 		]);
 	}
 
@@ -67,6 +68,14 @@ function setState(s) {
 	}
 }
 
+function map(server) {
+	server.host = url.parse(server.url).host;
+	server.location = server.name;
+	server.distance = server.dist;
+
+	return server;
+}
+
 var st = speedtest({maxTime: 20000});
 
 if (!cli.flags.json) {
@@ -74,6 +83,12 @@ if (!cli.flags.json) {
 }
 
 st.once('testserver', function (server) {
+	if (cli.flags.verbose) {
+		stats.data = {
+			server: map(server)
+		};
+	}
+
 	setState('download');
 	var ping = Math.round(server.bestPing);
 	stats.ping = (cli.flags.json) ? ping : chalk.cyan(ping + chalk.dim(' ms'));
@@ -109,6 +124,7 @@ st.on('data', function (data) {
 	if (cli.flags.verbose) {
 		stats.data = data;
 	}
+
 	render();
 });
 

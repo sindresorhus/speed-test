@@ -2,7 +2,7 @@
 var test = require('ava');
 var childProcess = require('child_process');
 
-test('normal', function (t) {
+test('main', function (t) {
 	t.plan(1);
 
 	var cp = childProcess.spawn('./cli.js', {
