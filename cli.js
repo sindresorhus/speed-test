@@ -7,6 +7,7 @@ var roundTo = require('round-to');
 var chalk = require('chalk');
 var logUpdate = require('log-update');
 var elegantSpinner = require('elegant-spinner');
+var url = require('url');
 
 var cli = meow({
 	help: [
@@ -14,7 +15,8 @@ var cli = meow({
 		'  $ speed-test',
 		'',
 		'Options',
-		'  --json  Output the result as JSON'
+		'  --json     Output the result as JSON',
+		'  --verbose  Output more detailed information'
 	]
 });
 
@@ -39,12 +41,23 @@ function render() {
 		return;
 	}
 
-	logUpdate([
+	var output = [
 		'',
 		'      Ping ' + getSpinner('ping') + ' ' + stats.ping,
 		'  Download ' + getSpinner('download') + ' ' + stats.download,
 		'    Upload ' + getSpinner('upload') + ' ' + stats.upload
-	].join('\n'));
+	];
+
+	if (cli.flags.verbose) {
+		output = output.concat([
+			'',
+			'    Server   ' + (stats.data !== undefined ? chalk.cyan(stats.data.server.host) : ''),
+			'  Location   ' + (stats.data !== undefined ? chalk.cyan(stats.data.server.location + chalk.dim(' (' + stats.data.server.country + ')')) : ''),
+			'  Distance   ' + (stats.data !== undefined ? chalk.cyan(roundTo(stats.data.server.distance, 1) + chalk.dim(' km')) : '')
+		]);
+	}
+
+	logUpdate(output.join('\n'));
 }
 
 function setState(s) {
@@ -55,6 +68,14 @@ function setState(s) {
 	}
 }
 
+function map(server) {
+	server.host = url.parse(server.url).host;
+	server.location = server.name;
+	server.distance = server.dist;
+
+	return server;
+}
+
 var st = speedtest({maxTime: 20000});
 
 if (!cli.flags.json) {
@@ -62,6 +83,12 @@ if (!cli.flags.json) {
 }
 
 st.once('testserver', function (server) {
+	if (cli.flags.verbose) {
+		stats.data = {
+			server: map(server)
+		};
+	}
+
 	setState('download');
 	var ping = Math.round(server.bestPing);
 	stats.ping = (cli.flags.json) ? ping : chalk.cyan(ping + chalk.dim(' ms'));
@@ -91,7 +118,17 @@ st.once('uploadspeed', function (speed) {
 	setState('');
 	var upload = roundTo(speed, 1);
 	stats.upload = (cli.flags.json) ? upload : chalk.cyan(upload + chalk.dim(' Mbps'));
+});
+
+st.on('data', function (data) {
+	if (cli.flags.verbose) {
+		stats.data = data;
+	}
+
 	render();
+});
+
+st.on('done', function () {
 	process.exit();
 });
 

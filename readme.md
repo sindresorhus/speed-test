@@ -21,7 +21,8 @@ $ speed-test --help
     $ speed-test
 
   Options
-    --json  Output the result as JSON
+    --json     Output the result as JSON
+    --verbose  Output more detailed information
 ```
 
 

@@ -40,11 +40,11 @@
     "log-update": "^1.0.0",
     "meow": "^3.3.0",
     "round-to": "^1.0.0",
-    "speedtest-net": "^1.0.3",
+    "speedtest-net": "^1.1.0",
     "update-notifier": "^0.5.0"
   },
   "devDependencies": {
-    "ava": "0.0.4",
+    "ava": "^0.2.0",
     "xo": "*"
   }
 }
