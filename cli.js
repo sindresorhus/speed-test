@@ -48,12 +48,12 @@ function render() {
 		'    Upload ' + getSpinner('upload') + ' ' + stats.upload
 	];
 
-	if (cli.flags.verbose && stats.data) {
+	if (cli.flags.verbose) {
 		output = output.concat([
 			'',
-			'    Server   ' + chalk.cyan(stats.data.server.host),
-			'  Location   ' + chalk.cyan(stats.data.server.location + chalk.dim(' (' + stats.data.server.country + ')')),
-			'  Distance   ' + chalk.cyan(roundTo(stats.data.server.distance, 1) + chalk.dim(' km'))
+			'    Server   ' + (stats.data !== undefined ? chalk.cyan(stats.data.server.host) : ''),
+			'  Location   ' + (stats.data !== undefined ? chalk.cyan(stats.data.server.location + chalk.dim(' (' + stats.data.server.country + ')')) : ''),
+			'  Distance   ' + (stats.data !== undefined ? chalk.cyan(roundTo(stats.data.server.distance, 1) + chalk.dim(' km')) : '')
 		]);
 	}
 
