@@ -96,27 +96,27 @@ st.once('testserver', function (server) {
 
 st.on('downloadspeedprogress', function (speed) {
 	if (state === 'download' && cli.flags.json !== true) {
-		var download = roundTo(speed, 1);
+		var download = roundTo(speed, speed > 10 ? 0 : 1);
 		stats.download = chalk.yellow(download + chalk.dim(' Mbps'));
 	}
 });
 
 st.on('uploadspeedprogress', function (speed) {
 	if (state === 'upload' && cli.flags.json !== true) {
-		var upload = roundTo(speed, 1);
+		var upload = roundTo(speed, speed > 10 ? 0 : 1);
 		stats.upload = chalk.yellow(upload + chalk.dim(' Mbps'));
 	}
 });
 
 st.once('downloadspeed', function (speed) {
 	setState('upload');
-	var download = roundTo(speed, 1);
+	var download = roundTo(speed, speed > 10 && !cli.flags.json ? 0 : 1);
 	stats.download = (cli.flags.json) ? download : chalk.cyan(download + chalk.dim(' Mbps'));
 });
 
 st.once('uploadspeed', function (speed) {
 	setState('');
-	var upload = roundTo(speed, 1);
+	var upload = roundTo(speed, speed > 10 && !cli.flags.json ? 0 : 1);
 	stats.upload = (cli.flags.json) ? upload : chalk.cyan(upload + chalk.dim(' Mbps'));
 });
 
