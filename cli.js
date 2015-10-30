@@ -51,9 +51,9 @@ function render() {
 	if (cli.flags.verbose) {
 		output = output.concat([
 			'',
-			'    Server   ' + (stats.data !== undefined ? chalk.cyan(stats.data.server.host) : ''),
-			'  Location   ' + (stats.data !== undefined ? chalk.cyan(stats.data.server.location + chalk.dim(' (' + stats.data.server.country + ')')) : ''),
-			'  Distance   ' + (stats.data !== undefined ? chalk.cyan(roundTo(stats.data.server.distance, 1) + chalk.dim(' km')) : '')
+			'    Server   ' + (stats.data === undefined ? '' : chalk.cyan(stats.data.server.host)),
+			'  Location   ' + (stats.data === undefined ? '' : chalk.cyan(stats.data.server.location + chalk.dim(' (' + stats.data.server.country + ')'))),
+			'  Distance   ' + (stats.data === undefined ? '' : chalk.cyan(roundTo(stats.data.server.distance, 1) + chalk.dim(' km')))
 		]);
 	}
 
