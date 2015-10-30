@@ -133,6 +133,10 @@ st.on('done', function () {
 });
 
 st.on('error', function (err) {
-	console.error(err);
+	if (err.code === 'ENOTFOUND') {
+		console.log(chalk.bold.red('Error:'), 'please check your internet connection.');
+	} else {
+		console.error(err);
+	}
 	process.exit(1);
 });
