@@ -6,6 +6,7 @@ var updateNotifier = require('update-notifier');
 var roundTo = require('round-to');
 var chalk = require('chalk');
 var logUpdate = require('log-update');
+var logSymbols = require('log-symbols');
 var elegantSpinner = require('elegant-spinner');
 var url = require('url');
 
@@ -134,9 +135,10 @@ st.on('done', function () {
 
 st.on('error', function (err) {
 	if (err.code === 'ENOTFOUND') {
-		console.log(chalk.bold.red('Error:'), 'please check your internet connection.');
+		console.error(logSymbols.error, 'Please check your internet connection');
 	} else {
 		console.error(err);
 	}
+
 	process.exit(1);
 });
