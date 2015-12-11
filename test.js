@@ -1,48 +1,32 @@
-import test from 'ava';
 import childProcess from 'child_process';
+import test from 'ava';
+import execa from 'execa';
 
-test('main', t => {
-	t.plan(1);
+test.cb('main', t => {
+	const cp = childProcess.spawn('./cli.js', {stdio: 'inherit'});
 
-	const cp = childProcess.spawn('./cli.js', {
-		cwd: __dirname,
-		stdio: 'inherit'
-	});
+	cp.on('error', t.ifError);
 
-	cp.on('error', err => t.ifError(err));
-	cp.on('close', code => t.is(code, 0));
-});
-
-test('--json', t => {
-	childProcess.execFile('./cli.js', ['--json'], {
-		cwd: __dirname
-	}, (err, data) => {
-		t.ifError(err);
-
-		data = JSON.parse(data);
-
-		t.not(data.ping, undefined);
-		t.not(data.upload, undefined);
-		t.not(data.download, undefined);
-		t.is(data.data, undefined);
-
+	cp.on('close', code => {
+		t.is(code, 0);
 		t.end();
 	});
 });
 
-test('--verbose --json', t => {
-	childProcess.execFile('./cli.js', ['--verbose', '--json'], {
-		cwd: __dirname
-	}, (err, data) => {
-		t.ifError(err);
+test('--json', async t => {
+	const {stdout} = await execa('./cli.js', ['--json']);
+	const x = JSON.parse(stdout);
+	t.ok(x.ping);
+	t.ok(x.upload);
+	t.ok(x.download);
+	t.notOk(x.data);
+});
 
-		data = JSON.parse(data);
-
-		t.not(data.ping, undefined);
-		t.not(data.upload, undefined);
-		t.not(data.download, undefined);
-		t.not(data.data, undefined);
-
-		t.end();
-	});
+test('--verbose --json', async t => {
+	const {stdout} = await execa('./cli.js', ['--verbose', '--json']);
+	const x = JSON.parse(stdout);
+	t.ok(x.ping);
+	t.ok(x.upload);
+	t.ok(x.download);
+	t.ok(x.data);
 });

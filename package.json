@@ -46,6 +46,12 @@
   },
   "devDependencies": {
     "ava": "*",
+    "execa": "^0.1.1",
     "xo": "*"
+  },
+  "xo": {
+    "ignores": [
+      "test.js"
+    ]
   }
 }
