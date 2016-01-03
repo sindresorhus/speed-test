@@ -17,7 +17,7 @@ var cli = meow({
 		'',
 		'Options',
 		'  --json     Output the result as JSON',
-		'  --bytes    Output the result in MBps (MegaBytes per second)',
+		'  --bytes    Output the result in megabytes per second',
 		'  --verbose  Output more detailed information'
 	]
 });
@@ -66,7 +66,7 @@ function render() {
 
 function setState(s) {
 	state = s;
-	
+
 	if (s && s.length > 0) {
 		stats[s] = chalk.yellow('0' + chalk.dim(unit));
 	}
