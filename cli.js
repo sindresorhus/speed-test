@@ -70,12 +70,11 @@ function setState(s) {
 	state = s;
 
 	if (s && s.length > 0) {
-		if(cli.flags.bytes !== true){
+		if (cli.flags.bytes !== true) {
 			stats[s] = chalk.yellow('0' + chalk.dim(' Mbps'));
-		}else{
+		} else {
 			stats[s] = chalk.yellow('0' + chalk.dim(' MBps'));
 		}
-		
 	}
 }
 
@@ -106,22 +105,20 @@ st.once('testserver', function (server) {
 });
 
 st.on('downloadspeedprogress', function (speed) {
+	var download = roundTo(speed, speed > 10 ? 0 : 1);
 	if (state === 'download' && cli.flags.json !== true && cli.flags.bytes !== true) {
-		var download = roundTo(speed, speed > 10 ? 0 : 1);
 		stats.download = chalk.yellow(download + chalk.dim(' Mbps'));
-	}else if(state === 'download' && cli.flags.bytes == true){
-		var download = roundTo(speed, speed > 10 ? 0 : 1);
+	} else if (state === 'download' && cli.flags.bytes === true) {
 		download = download / 8 ;
 		stats.download = chalk.yellow(download + chalk.dim(' MBps'));
 	}
 });
 
 st.on('uploadspeedprogress', function (speed) {
+	var upload = roundTo(speed, speed > 10 ? 0 : 1);
 	if (state === 'upload' && cli.flags.json !== true && cli.flags.bytes !== true) {
-		var upload = roundTo(speed, speed > 10 ? 0 : 1);
 		stats.upload = chalk.yellow(upload + chalk.dim(' Mbps'));
-	}else if(state === 'download' && cli.flags.bytes == true){
-		var upload = roundTo(speed, speed > 10 ? 0 : 1);
+	}else if (state === 'download' && cli.flags.bytes === true) {
 		upload = upload / 8 ;
 		stats.upload = chalk.yellow(upload + chalk.dim(' MBps'));
 	}
@@ -129,28 +126,24 @@ st.on('uploadspeedprogress', function (speed) {
 
 st.once('downloadspeed', function (speed) {
 	setState('upload');
-	if(cli.flags.bytes !== true){
-		var download = roundTo(speed, speed > 10 && !cli.flags.json ? 0 : 1);
+	var download = roundTo(speed, speed > 10 && !cli.flags.json ? 0 : 1);
+	if (cli.flags.bytes !== true) {
 		stats.download = (cli.flags.json) ? download : chalk.cyan(download + chalk.dim(' Mbps'));
-	}else if(cli.flags.bytes === true){
-		var download = roundTo(speed, speed > 10 && !cli.flags.json ? 0 : 1);
+	} else if (cli.flags.bytes === true) {
 		download = download / 8 ;
 		stats.download = (cli.flags.json) ? download : chalk.cyan(download + chalk.dim(' MBps'));
 	}
-	
 });
 
 st.once('uploadspeed', function (speed) {
 	setState('');
-	if(cli.flags.bytes !== true){
-		var upload = roundTo(speed, speed > 10 && !cli.flags.json ? 0 : 1);
+	var upload = roundTo(speed, speed > 10 && !cli.flags.json ? 0 : 1);
+	if (cli.flags.bytes !== true) {
 		stats.upload = (cli.flags.json) ? upload : chalk.cyan(upload + chalk.dim(' Mbps'));
-	}else if(cli.flags.bytes === true){
-		var upload = roundTo(speed, speed > 10 && !cli.flags.json ? 0 : 1);
+	} else if (cli.flags.bytes === true) {
 		upload = upload / 8 ;
 		stats.upload = (cli.flags.json) ? upload : chalk.cyan(upload + chalk.dim(' MBps'));
 	}
-	
 });
 
 st.on('data', function (data) {
