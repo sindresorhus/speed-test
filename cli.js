@@ -33,7 +33,7 @@ var stats = {
 var state = 'ping';
 var frame = elegantSpinner();
 var unit = cli.flags.bytes === true ? 'MBps' : 'Mbps';
-var multiplier = cli.flags.bytes ? 1/8 : 1;
+var multiplier = cli.flags.bytes ? 1 / 8 : 1;
 
 function getSpinner(x) {
 	return state === x ? chalk.gray.dim(frame()) : ' ';
