@@ -66,6 +66,7 @@ function render() {
 
 function setState(s) {
 	state = s;
+	
 	if (s && s.length > 0) {
 		stats[s] = chalk.yellow('0' + chalk.dim(unit));
 	}
