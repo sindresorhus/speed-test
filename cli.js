@@ -33,6 +33,7 @@ var stats = {
 var state = 'ping';
 var frame = elegantSpinner();
 var unit = cli.flags.bytes === true ? 'MBps' : 'Mbps';
+var multiplier = cli.flags.bytes ? 1/8 : 1;
 
 function getSpinner(x) {
 	return state === x ? chalk.gray.dim(frame()) : ' ';
@@ -97,20 +98,14 @@ st.once('testserver', function (server) {
 });
 
 st.on('downloadspeedprogress', function (speed) {
-	var download = roundTo(speed, speed > 10 ? 0 : 1);
-	if (unit === 'MBps') {
-		download /= 8;
-	}
+	var download = roundTo(speed, speed > 10 ? 0 : 1) * multiplier;
 	if (state === 'download' && cli.flags.json !== true) {
 		stats.download = chalk.yellow(download + ' ' + chalk.dim(unit));
 	}
 });
 
 st.on('uploadspeedprogress', function (speed) {
-	var upload = roundTo(speed, speed > 10 ? 0 : 1);
-	if (unit === 'MBps') {
-		upload /= 8;
-	}
+	var upload = roundTo(speed, speed > 10 ? 0 : 1) * multiplier;
 	if (state === 'upload' && cli.flags.json !== true) {
 		stats.upload = chalk.yellow(upload + ' ' + chalk.dim(unit));
 	}
@@ -118,19 +113,13 @@ st.on('uploadspeedprogress', function (speed) {
 
 st.once('downloadspeed', function (speed) {
 	setState('upload');
-	var download = roundTo(speed, speed > 10 && !cli.flags.json ? 0 : 1);
-	if (unit === 'MBps') {
-		download /= 8;
-	}
+	var download = roundTo(speed, speed > 10 && !cli.flags.json ? 0 : 1) * multiplier;
 	stats.download = cli.flags.json ? download : chalk.cyan(download + ' ' + chalk.dim(unit));
 });
 
 st.once('uploadspeed', function (speed) {
 	setState('');
-	var upload = roundTo(speed, speed > 10 && !cli.flags.json ? 0 : 1);
-	if (unit === 'MBps') {
-		upload /= 8;
-	}
+	var upload = roundTo(speed, speed > 10 && !cli.flags.json ? 0 : 1) * multiplier;
 	stats.upload = cli.flags.json ? upload : chalk.cyan(upload + ' ' + chalk.dim(unit));
 });
 
