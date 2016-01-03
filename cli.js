@@ -112,7 +112,7 @@ st.on('uploadspeedprogress', function (speed) {
 	var upload = roundTo(speed, speed > 10 ? 0 : 1);
 	if (state === 'upload' && cli.flags.json !== true && cli.flags.bytes !== true) {
 		stats.upload = chalk.yellow(upload + chalk.dim(' Mbps'));
-	}else if (state === 'download' && cli.flags.bytes === true) {
+	} else if (state === 'download' && cli.flags.bytes === true) {
 		upload /= 8;
 		stats.upload = chalk.yellow(upload + chalk.dim(' MBps'));
 	}
@@ -124,7 +124,7 @@ st.once('downloadspeed', function (speed) {
 	if (cli.flags.bytes !== true) {
 		stats.download = (cli.flags.json) ? download : chalk.cyan(download + chalk.dim(' Mbps'));
 	} else if (cli.flags.bytes === true) {
-		download /= 8 ;
+		download /= 8;
 		stats.download = (cli.flags.json) ? download : chalk.cyan(download + chalk.dim(' MBps'));
 	}
 });
@@ -135,7 +135,7 @@ st.once('uploadspeed', function (speed) {
 	if (cli.flags.bytes !== true) {
 		stats.upload = (cli.flags.json) ? upload : chalk.cyan(upload + chalk.dim(' Mbps'));
 	} else if (cli.flags.bytes === true) {
-		upload /= 8 ;
+		upload /= 8;
 		stats.upload = (cli.flags.json) ? upload : chalk.cyan(upload + chalk.dim(' MBps'));
 	}
 });
