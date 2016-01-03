@@ -120,7 +120,7 @@ st.once('downloadspeed', function (speed) {
 
 st.once('uploadspeed', function (speed) {
 	setState('');
-	var upload = roundTo(speed  * multiplier, speed > 10 && !cli.flags.json ? 0 : 1);
+	var upload = roundTo(speed * multiplier, speed > 10 && !cli.flags.json ? 0 : 1);
 	stats.upload = cli.flags.json ? upload : chalk.cyan(upload + ' ' + chalk.dim(unit));
 });
 
