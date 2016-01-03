@@ -59,22 +59,16 @@ function render() {
 		]);
 	}
 
-	if(cli.flags.bytes){
-
-	}
-
 	logUpdate(output.join('\n'));
 }
 
 function setState(s) {
 	state = s;
 
-	if (s && s.length > 0) {
-		if (cli.flags.bytes !== true) {
-			stats[s] = chalk.yellow('0' + chalk.dim(' Mbps'));
-		} else {
-			stats[s] = chalk.yellow('0' + chalk.dim(' MBps'));
-		}
+	if (s && s.length > 0 && cli.flags.bytes !== true) {
+		stats[s] = chalk.yellow('0' + chalk.dim(' Mbps'));
+	} else if (s && s.length > 0 && cli.flags.bytes === true) {
+		stats[s] = chalk.yellow('0' + chalk.dim(' MBps'));
 	}
 }
 
@@ -109,7 +103,7 @@ st.on('downloadspeedprogress', function (speed) {
 	if (state === 'download' && cli.flags.json !== true && cli.flags.bytes !== true) {
 		stats.download = chalk.yellow(download + chalk.dim(' Mbps'));
 	} else if (state === 'download' && cli.flags.bytes === true) {
-		download = download / 8 ;
+		download /= 8;
 		stats.download = chalk.yellow(download + chalk.dim(' MBps'));
 	}
 });
@@ -119,7 +113,7 @@ st.on('uploadspeedprogress', function (speed) {
 	if (state === 'upload' && cli.flags.json !== true && cli.flags.bytes !== true) {
 		stats.upload = chalk.yellow(upload + chalk.dim(' Mbps'));
 	}else if (state === 'download' && cli.flags.bytes === true) {
-		upload = upload / 8 ;
+		upload /= 8;
 		stats.upload = chalk.yellow(upload + chalk.dim(' MBps'));
 	}
 });
@@ -130,7 +124,7 @@ st.once('downloadspeed', function (speed) {
 	if (cli.flags.bytes !== true) {
 		stats.download = (cli.flags.json) ? download : chalk.cyan(download + chalk.dim(' Mbps'));
 	} else if (cli.flags.bytes === true) {
-		download = download / 8 ;
+		download /= 8 ;
 		stats.download = (cli.flags.json) ? download : chalk.cyan(download + chalk.dim(' MBps'));
 	}
 });
@@ -141,7 +135,7 @@ st.once('uploadspeed', function (speed) {
 	if (cli.flags.bytes !== true) {
 		stats.upload = (cli.flags.json) ? upload : chalk.cyan(upload + chalk.dim(' Mbps'));
 	} else if (cli.flags.bytes === true) {
-		upload = upload / 8 ;
+		upload /= 8 ;
 		stats.upload = (cli.flags.json) ? upload : chalk.cyan(upload + chalk.dim(' MBps'));
 	}
 });
