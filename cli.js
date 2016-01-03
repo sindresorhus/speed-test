@@ -65,7 +65,6 @@ function render() {
 
 function setState(s) {
 	state = s;
-	
 	if (s && s.length > 0) {
 		stats[s] = chalk.yellow('0' + chalk.dim(unit));
 	}
@@ -99,7 +98,7 @@ st.once('testserver', function (server) {
 
 st.on('downloadspeedprogress', function (speed) {
 	var download = roundTo(speed, speed > 10 ? 0 : 1);
-	if(unit === 'MBps'){
+	if (unit === 'MBps') {
 		download /= 8;
 	}
 	if (state === 'download' && cli.flags.json !== true) {
@@ -109,7 +108,7 @@ st.on('downloadspeedprogress', function (speed) {
 
 st.on('uploadspeedprogress', function (speed) {
 	var upload = roundTo(speed, speed > 10 ? 0 : 1);
-	if(unit === 'MBps'){
+	if (unit === 'MBps') {
 		upload /= 8;
 	}
 	if (state === 'upload' && cli.flags.json !== true) {
@@ -120,7 +119,7 @@ st.on('uploadspeedprogress', function (speed) {
 st.once('downloadspeed', function (speed) {
 	setState('upload');
 	var download = roundTo(speed, speed > 10 && !cli.flags.json ? 0 : 1);
-	if(unit === 'MBps'){
+	if (unit === 'MBps') {
 		download /= 8;
 	}
 	stats.download = cli.flags.json ? download : chalk.cyan(download + ' ' + chalk.dim(unit));
@@ -129,7 +128,7 @@ st.once('downloadspeed', function (speed) {
 st.once('uploadspeed', function (speed) {
 	setState('');
 	var upload = roundTo(speed, speed > 10 && !cli.flags.json ? 0 : 1);
-	if(unit === 'MBps'){
+	if (unit === 'MBps') {
 		upload /= 8;
 	}
 	stats.upload = cli.flags.json ? upload : chalk.cyan(upload + ' ' + chalk.dim(unit));
