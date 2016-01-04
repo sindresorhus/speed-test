@@ -99,15 +99,15 @@ st.once('testserver', function (server) {
 });
 
 st.on('downloadspeedprogress', function (speed) {
-	var download = roundTo(speed * multiplier, speed > 10 ? 0 : 1);
 	if (state === 'download' && cli.flags.json !== true) {
+		var download = roundTo(speed * multiplier, speed > 10 ? 0 : 1);
 		stats.download = chalk.yellow(download + ' ' + chalk.dim(unit));
 	}
 });
 
 st.on('uploadspeedprogress', function (speed) {
-	var upload = roundTo(speed * multiplier, speed > 10 ? 0 : 1);
 	if (state === 'upload' && cli.flags.json !== true) {
+		var upload = roundTo(speed * multiplier, speed > 10 ? 0 : 1);
 		stats.upload = chalk.yellow(upload + ' ' + chalk.dim(unit));
 	}
 });
