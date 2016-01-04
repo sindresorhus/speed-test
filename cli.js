@@ -68,7 +68,7 @@ function setState(s) {
 	state = s;
 
 	if (s && s.length > 0) {
-		stats[s] = chalk.yellow('0' + chalk.dim(unit));
+		stats[s] = chalk.yellow('0 ' + chalk.dim(unit));
 	}
 }
 
@@ -101,7 +101,7 @@ st.once('testserver', function (server) {
 st.on('downloadspeedprogress', function (speed) {
 	if (state === 'download' && cli.flags.json !== true) {
 		speed *= multiplier;
-		var download = roundTo(speed, speed > 10 ? 1 : 2);
+		var download = roundTo(speed, speed >= 10 ? 0 : 1);
 		stats.download = chalk.yellow(download + ' ' + chalk.dim(unit));
 	}
 });
@@ -109,7 +109,7 @@ st.on('downloadspeedprogress', function (speed) {
 st.on('uploadspeedprogress', function (speed) {
 	if (state === 'upload' && cli.flags.json !== true) {
 		speed *= multiplier;
-		var upload = roundTo(speed, speed > 10 ? 1 : 2);
+		var upload = roundTo(speed, speed >= 10 ? 0 : 1);
 		stats.upload = chalk.yellow(upload + ' ' + chalk.dim(unit));
 	}
 });
@@ -117,14 +117,14 @@ st.on('uploadspeedprogress', function (speed) {
 st.once('downloadspeed', function (speed) {
 	setState('upload');
 	speed *= multiplier;
-	var download = roundTo(speed, speed > 10 && !cli.flags.json ? 1 : 2);
+	var download = roundTo(speed, speed >= 10 && !cli.flags.json ? 0 : 1);
 	stats.download = cli.flags.json ? download : chalk.cyan(download + ' ' + chalk.dim(unit));
 });
 
 st.once('uploadspeed', function (speed) {
 	setState('');
 	speed *= multiplier;
-	var upload = roundTo(speed, speed > 10 && !cli.flags.json ? 1 : 2);
+	var upload = roundTo(speed, speed >= 10 && !cli.flags.json ? 0 : 1);
 	stats.upload = cli.flags.json ? upload : chalk.cyan(upload + ' ' + chalk.dim(unit));
 });
 
