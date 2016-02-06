@@ -16,9 +16,10 @@ var cli = meow({
 		'  $ speed-test',
 		'',
 		'Options',
-		'  --json     Output the result as JSON',
-		'  --bytes    Output the result in megabytes per second',
-		'  --verbose  Output more detailed information'
+		'  --json         Output the result as JSON',
+		'  --bytes        Output the result in megabytes per second',
+		'  --verbose      Output more detailed information',
+		'  --user-agent   Indicate user-agent for requests to speedtest.net'
 	]
 });
 
@@ -34,6 +35,7 @@ var state = 'ping';
 var frame = elegantSpinner();
 var unit = cli.flags.bytes ? 'MBps' : 'Mbps';
 var multiplier = cli.flags.bytes ? 1 / 8 : 1;
+var userAgent = cli.flags['user-agent'] || 'temp-agent';
 
 function getSpinner(x) {
 	return state === x ? chalk.gray.dim(frame()) : ' ';
@@ -80,7 +82,7 @@ function map(server) {
 	return server;
 }
 
-var st = speedtest({maxTime: 20000});
+var st = speedtest({maxTime: 20000, headers: {'user-agent': userAgent}});
 
 if (!cli.flags.json) {
 	setInterval(render, 50);
