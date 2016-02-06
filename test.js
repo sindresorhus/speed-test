@@ -30,3 +30,12 @@ test('--verbose --json', async t => {
 	t.ok(x.download);
 	t.ok(x.data);
 });
+
+test('--verbose --json --user-agent', async t => {
+	const {stdout} = await execa('./cli.js', ['--verbose', '--json', '--user-agent=test']);
+	const x = JSON.parse(stdout);
+	t.ok(x.ping);
+	t.ok(x.upload);
+	t.ok(x.download);
+	t.ok(x.data);
+});

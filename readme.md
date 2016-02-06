@@ -21,9 +21,10 @@ $ speed-test --help
     $ speed-test
 
   Options
-    --json     Output the result as JSON
-    --bytes    Output the result in megabytes per second
-    --verbose  Output more detailed information
+    --json         Output the result as JSON
+    --bytes        Output the result in megabytes per second
+    --verbose      Output more detailed information
+    --user-agent   Indicate user-agent for requests to speedtest.net
 ```
 
 
