@@ -16,17 +16,17 @@ test.cb('main', t => {
 test('--json', async t => {
 	const {stdout} = await execa('./cli.js', ['--json']);
 	const x = JSON.parse(stdout);
-	t.ok(x.ping);
-	t.ok(x.upload);
-	t.ok(x.download);
-	t.notOk(x.data);
+	t.truthy(x.ping);
+	t.truthy(x.upload);
+	t.truthy(x.download);
+	t.falsy(x.data);
 });
 
 test('--verbose --json', async t => {
 	const {stdout} = await execa('./cli.js', ['--verbose', '--json']);
 	const x = JSON.parse(stdout);
-	t.ok(x.ping);
-	t.ok(x.upload);
-	t.ok(x.download);
-	t.ok(x.data);
+	t.truthy(x.ping);
+	t.truthy(x.upload);
+	t.truthy(x.download);
+	t.truthy(x.data);
 });
