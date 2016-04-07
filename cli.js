@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 'use strict';
+var url = require('url');
 var meow = require('meow');
 var speedtest = require('speedtest-net');
 var updateNotifier = require('update-notifier');
@@ -7,8 +8,7 @@ var roundTo = require('round-to');
 var chalk = require('chalk');
 var logUpdate = require('log-update');
 var logSymbols = require('log-symbols');
-var elegantSpinner = require('elegant-spinner');
-var url = require('url');
+var Ora = require('ora');
 
 var cli = meow({
 	help: [
@@ -31,12 +31,12 @@ var stats = {
 };
 
 var state = 'ping';
-var frame = elegantSpinner();
+var spinner = new Ora();
 var unit = cli.flags.bytes ? 'MBps' : 'Mbps';
 var multiplier = cli.flags.bytes ? 1 / 8 : 1;
 
 function getSpinner(x) {
-	return state === x ? chalk.gray.dim(frame()) : ' ';
+	return state === x ? chalk.gray.dim(spinner.frame()) : '  ';
 }
 
 function render() {
@@ -47,9 +47,9 @@ function render() {
 
 	var output = [
 		'',
-		'      Ping ' + getSpinner('ping') + ' ' + stats.ping,
-		'  Download ' + getSpinner('download') + ' ' + stats.download,
-		'    Upload ' + getSpinner('upload') + ' ' + stats.upload
+		'      Ping ' + getSpinner('ping') + stats.ping,
+		'  Download ' + getSpinner('download') + stats.download,
+		'    Upload ' + getSpinner('upload') + stats.upload
 	];
 
 	if (cli.flags.verbose) {
