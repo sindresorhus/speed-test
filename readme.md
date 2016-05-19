@@ -27,6 +27,11 @@ $ speed-test --help
 ```
 
 
+## Related
+
+- [fast-cli](https://github.com/sindresorhus/fast-cli) - Test your download speed using fast.com
+
+
 ## License
 
 MIT © [Sindre Sorhus](http://sindresorhus.com)
