@@ -137,6 +137,7 @@ st.on('data', function (data) {
 });
 
 st.on('done', function () {
+	console.log();
 	process.exit();
 });
 
