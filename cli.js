@@ -10,17 +10,15 @@ var logUpdate = require('log-update');
 var logSymbols = require('log-symbols');
 var Ora = require('ora');
 
-var cli = meow({
-	help: [
-		'Usage',
-		'  $ speed-test',
-		'',
-		'Options',
-		'  --json     Output the result as JSON',
-		'  --bytes    Output the result in megabytes per second',
-		'  --verbose  Output more detailed information'
-	]
-});
+var cli = meow([
+	'Usage',
+	'  $ speed-test',
+	'',
+	'Options',
+	'  --json     Output the result as JSON',
+	'  --bytes    Output the result in megabytes per second',
+	'  --verbose  Output more detailed information'
+]);
 
 updateNotifier({pkg: cli.pkg}).notify();
 
