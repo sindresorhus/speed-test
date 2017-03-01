@@ -15,10 +15,18 @@ var cli = meow([
 	'  $ speed-test',
 	'',
 	'Options',
-	'  --json     Output the result as JSON',
-	'  --bytes    Output the result in megabytes per second',
-	'  --verbose  Output more detailed information'
-]);
+	'  -j, --json     Output the result as JSON',
+	'  -B, --bytes    Output the result in megabytes per second (MBps)',
+	'  -v, --verbose  Output more detailed information',
+	'  -h, --help     Output usage information'
+], {
+	alias: {
+		j: 'json',
+		B: 'bytes',
+		v: 'verbose',
+		h: 'help'
+	}
+});
 
 updateNotifier({pkg: cli.pkg}).notify();
 
