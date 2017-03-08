@@ -21,10 +21,10 @@ $ speed-test --help
     $ speed-test
 
   Options
-	-j, --json     Output the result as JSON
-	-B, --bytes    Output the result in megabytes per second (MBps)
-	-v, --verbose  Output more detailed information
-	-h, --help     Output usage information
+    -j, --json     Output the result as JSON
+    -b, --bytes    Output the result in megabytes per second (MBps)
+    -v, --verbose  Output more detailed information
+    -h, --help     Output usage information
 ```
 
 
