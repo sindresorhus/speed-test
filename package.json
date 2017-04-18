@@ -41,7 +41,7 @@
     "meow": "^3.3.0",
     "ora": "^0.2.1",
     "round-to": "^1.0.0",
-    "speedtest-net": "^1.2.4",
+    "speedtest-net": "^1.2.5",
     "update-notifier": "^0.6.0"
   },
   "devDependencies": {
