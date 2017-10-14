@@ -2,10 +2,14 @@
 
 > Test your internet connection speed and ping using [speedtest.net](http://www.speedtest.net) from the CLI
 
+**Discuss it on [Product Hunt](https://www.producthunt.com/posts/speed-test-cli)**
+
 <img src="screenshot.gif" width="404">
 
 
 ## Install
+
+Ensure you have Node.js version 0.10 or higher installed. Then run the following:
 
 ```
 $ npm install --global speed-test
