@@ -17,12 +17,16 @@ var cli = meow([
 	'Options',
 	'  -j, --json     Output the result as JSON',
 	'  -b, --bytes    Output the result in megabytes per second (MBps)',
-	'  -v, --verbose  Output more detailed information'
+	'  -v, --verbose  Output more detailed information',
+	'  -s, --server   Specify a server ID to test against',
+	'  -l, --list     Display a list of speedtest.net servers'
 ], {
 	alias: {
 		j: 'json',
 		b: 'bytes',
 		v: 'verbose',
+		s: 'server',
+		l: 'list',
 		h: 'help'
 	}
 });
@@ -85,7 +89,18 @@ function map(server) {
 	return server;
 }
 
-var st = speedtest({maxTime: 20000});
+var st = speedtest({maxTime: 20000, serverId: cli.flags.server});
+
+if (cli.flags.list) {
+	return st.on('servers', function (servers) {
+		for (let i = 0; i < servers.length; i++) {
+			let server = servers[i];
+			console.log(`${server.id}\t${server.name} (${server.country})`);
+		}
+
+		process.exit();
+	});
+}
 
 if (!cli.flags.json) {
 	setInterval(render, 50);
