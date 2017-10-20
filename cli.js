@@ -17,7 +17,7 @@ var cli = meow([
 	'Options',
 	'  -j, --json     Output the result as JSON',
 	'  -b, --bytes    Output the result in megabytes per second (MBps)',
-	'  -v, --verbose  Output more detailed information',
+	'  -v, --verbose  Output more detailed information'
 ], {
 	alias: {
 		j: 'json',
