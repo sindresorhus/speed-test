@@ -148,9 +148,19 @@ st.on('done', function () {
 
 st.on('error', function (err) {
 	if (err.code === 'ENOTFOUND') {
-		console.error(logSymbols.error, 'Please check your internet connection');
+		if (cli.flags.json) {
+			console.error(JSON.stringify({
+				error: 'Please check your internet connection'
+			}));
+		} else {
+			console.error(logSymbols.error, 'Please check your internet connection');
+		}
 	} else {
-		console.error(err);
+		if (cli.flags.json) {
+			console.log(JSON.stringify(err));
+		} else {
+			console.error(err);
+		}
 	}
 
 	process.exit(1);
