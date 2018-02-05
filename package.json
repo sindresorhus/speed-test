@@ -1,52 +1,52 @@
 {
-  "name": "speed-test",
-  "version": "1.8.0",
-  "description": "Test your internet connection speed and ping using speedtest.net from the CLI",
-  "license": "MIT",
-  "repository": "sindresorhus/speed-test",
-  "author": {
-    "name": "Sindre Sorhus",
-    "email": "sindresorhus@gmail.com",
-    "url": "sindresorhus.com"
-  },
-  "bin": "cli.js",
-  "engines": {
-    "node": ">=0.10.0"
-  },
-  "scripts": {
-    "test": "xo && ava"
-  },
-  "files": [
-    "cli.js"
-  ],
-  "keywords": [
-    "cli-app",
-    "cli",
-    "speed",
-    "test",
-    "tester",
-    "speed-test",
-    "speedtest",
-    "connection",
-    "internet",
-    "bandwidth",
-    "ping",
-    "measure",
-    "check"
-  ],
-  "dependencies": {
-    "chalk": "^1.1.0",
-    "log-symbols": "^1.0.2",
-    "log-update": "^1.0.0",
-    "meow": "^3.3.0",
-    "ora": "^0.2.1",
-    "round-to": "^1.0.0",
-    "speedtest-net": "^1.2.4",
-    "update-notifier": "^0.6.0"
-  },
-  "devDependencies": {
-    "ava": "*",
-    "execa": "^0.1.1",
-    "xo": "*"
-  }
+	"name": "speed-test",
+	"version": "1.8.0",
+	"description": "Test your internet connection speed and ping using speedtest.net from the CLI",
+	"license": "MIT",
+	"repository": "sindresorhus/speed-test",
+	"author": {
+		"name": "Sindre Sorhus",
+		"email": "sindresorhus@gmail.com",
+		"url": "sindresorhus.com"
+	},
+	"bin": "cli.js",
+	"engines": {
+		"node": ">=8"
+	},
+	"scripts": {
+		"test": "xo && ava"
+	},
+	"files": [
+		"cli.js"
+	],
+	"keywords": [
+		"cli-app",
+		"cli",
+		"speed",
+		"test",
+		"tester",
+		"speed-test",
+		"speedtest",
+		"connection",
+		"internet",
+		"bandwidth",
+		"ping",
+		"measure",
+		"check"
+	],
+	"dependencies": {
+		"chalk": "^2.3.0",
+		"log-symbols": "^2.2.0",
+		"log-update": "^2.3.0",
+		"meow": "^4.0.0",
+		"ora": "^1.4.0",
+		"round-to": "^2.0.0",
+		"speedtest-net": "^1.2.4",
+		"update-notifier": "^2.3.0"
+	},
+	"devDependencies": {
+		"ava": "*",
+		"execa": "^0.9.0",
+		"xo": "*"
+	}
 }
