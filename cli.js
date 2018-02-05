@@ -50,6 +50,14 @@ const multiplier = cli.flags.bytes ? 1 / 8 : 1;
 
 const getSpinner = x => state === x ? chalk.gray.dim(spinner.frame()) : '  ';
 
+const logError = error => {
+	if (cli.flags.json) {
+		console.error(JSON.stringify({error}));
+	} else {
+		console.error(logSymbols.error, error);
+	}
+};
+
 function render() {
 	if (cli.flags.json) {
 		console.log(JSON.stringify(stats));
@@ -82,6 +90,7 @@ function setState(s) {
 }
 
 function map(server) {
+	/* eslint-disable prefer-destructuring */
 	server.host = url.parse(server.url).host;
 	server.location = server.name;
 	server.distance = server.dist;
@@ -151,9 +160,9 @@ st.on('done', () => {
 
 st.on('error', err => {
 	if (err.code === 'ENOTFOUND') {
-		console.error(logSymbols.error, 'Please check your internet connection');
+		logError('Please check your internet connection');
 	} else {
-		console.error(err);
+		logError(err);
 	}
 
 	process.exit(1);
