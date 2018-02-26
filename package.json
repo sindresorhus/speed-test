@@ -1,6 +1,6 @@
 {
 	"name": "speed-test",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "Test your internet connection speed and ping using speedtest.net from the CLI",
 	"license": "MIT",
 	"repository": "sindresorhus/speed-test",
