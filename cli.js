@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-const url = require('url');
+const {URL} = require('url');
 const meow = require('meow');
 const speedtest = require('speedtest-net');
 const updateNotifier = require('update-notifier');
@@ -48,7 +48,7 @@ const spinner = new Ora();
 const unit = cli.flags.bytes ? 'MBps' : 'Mbps';
 const multiplier = cli.flags.bytes ? 1 / 8 : 1;
 
-const getSpinner = x => state === x ? chalk.gray.dim(spinner.frame()) : '  ';
+const getSpinnerFromState = inputState => inputState === state ? chalk.gray.dim(spinner.frame()) : '  ';
 
 const logError = error => {
 	if (cli.flags.json) {
@@ -65,9 +65,9 @@ function render() {
 	}
 
 	let output = `
-      Ping ${getSpinner('ping')}${stats.ping}
-  Download ${getSpinner('download')}${stats.download}
-    Upload ${getSpinner('upload')}${stats.upload}`;
+      Ping ${getSpinnerFromState('ping')}${stats.ping}
+  Download ${getSpinnerFromState('download')}${stats.download}
+    Upload ${getSpinnerFromState('upload')}${stats.upload}`;
 
 	if (cli.flags.verbose) {
 		output += [
@@ -81,17 +81,16 @@ function render() {
 	logUpdate(output);
 }
 
-function setState(s) {
-	state = s;
+function setState(newState) {
+	state = newState;
 
-	if (s && s.length > 0) {
-		stats[s] = chalk.yellow(`0 ${chalk.dim(unit)}`);
+	if (newState && newState.length > 0) {
+		stats[newState] = chalk.yellow(`0 ${chalk.dim(unit)}`);
 	}
 }
 
 function map(server) {
-	/* eslint-disable prefer-destructuring */
-	server.host = url.parse(server.url).host;
+	server.host = new URL(server.url).host;
 	server.location = server.name;
 	server.distance = server.dist;
 	return server;
@@ -158,11 +157,11 @@ st.on('done', () => {
 	process.exit();
 });
 
-st.on('error', err => {
-	if (err.code === 'ENOTFOUND') {
+st.on('error', error => {
+	if (error.code === 'ENOTFOUND') {
 		logError('Please check your internet connection');
 	} else {
-		logError(err);
+		logError(error);
 	}
 
 	process.exit(1);

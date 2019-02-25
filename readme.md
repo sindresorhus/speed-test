@@ -1,8 +1,6 @@
 # speed-test [![Build Status](https://travis-ci.org/sindresorhus/speed-test.svg?branch=master)](https://travis-ci.org/sindresorhus/speed-test)
 
-> Test your internet connection speed and ping using [speedtest.net](http://www.speedtest.net) from the CLI
-
-**Discuss it on [Product Hunt](https://www.producthunt.com/posts/speed-test-cli)**
+> Test your internet connection speed and ping using [speedtest.net](https://www.speedtest.net) from the CLI
 
 <img src="screenshot.gif" width="404">
 
@@ -29,6 +27,11 @@ $ speed-test --help
     --bytes -b    Output the result in megabytes per second (MBps)
     --verbose -v  Output more detailed information
 ```
+
+
+## Links
+
+- [Product Hunt post](https://www.producthunt.com/posts/speed-test-cli)
 
 
 ## Related
