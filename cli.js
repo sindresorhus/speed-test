@@ -146,6 +146,7 @@ st.once('uploadspeed', speed => {
 
 st.on('data', data => {
 	if (cli.flags.verbose) {
+		stats.timestamp = new Date().getTime();
 		stats.data = data;
 	}
 

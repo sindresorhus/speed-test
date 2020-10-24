@@ -28,6 +28,11 @@ $ speed-test --help
     --verbose -v  Output more detailed information
 ```
 
+## Batch monitoring
+
+```bash
+while true; do sleep 30; node cli.js -v -j; done >> ~/net.log
+```
 
 ## Links
 
