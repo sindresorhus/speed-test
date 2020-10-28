@@ -33,7 +33,7 @@ $ speed-test --help
 ### Batch monitoring
 
 ```bash
-while true; do sleep 30; node cli.js -v -j; done >> ~/net.log
+while true; do sleep 30; node cli.js --verbose --json; done >> ~/net.log
 ```
 
 ## Links
