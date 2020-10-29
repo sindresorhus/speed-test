@@ -36,6 +36,8 @@ $ speed-test --help
 while true; do sleep 30; node cli.js --verbose --json; done >> ~/net.log
 ```
 
+**Note**: using the **"--verbose"** and **"--json"** will include a timestamp **e.g**: "1603971242534" property generated now in form of a timestamp, good for recording the metrics in some monitoring software.
+
 ## Links
 
 - [Product Hunt post](https://www.producthunt.com/posts/speed-test-cli)
