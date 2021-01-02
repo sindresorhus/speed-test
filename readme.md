@@ -1,4 +1,4 @@
-# speed-test [![Build Status](https://travis-ci.org/sindresorhus/speed-test.svg?branch=master)](https://travis-ci.org/sindresorhus/speed-test)
+# speed-test
 
 > Test your internet connection speed and ping using [speedtest.net](https://www.speedtest.net) from the CLI
 
