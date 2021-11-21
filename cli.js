@@ -1,14 +1,13 @@
 #!/usr/bin/env node
-'use strict';
-const {URL} = require('url');
-const meow = require('meow');
-const speedtest = require('speedtest-net');
-const updateNotifier = require('update-notifier');
-const roundTo = require('round-to');
-const chalk = require('chalk');
-const logUpdate = require('log-update');
-const logSymbols = require('log-symbols');
-const Ora = require('ora');
+import process from 'node:process';
+import {URL} from 'node:url';
+import meow from 'meow';
+import speedtest from 'speedtest-net';
+import {roundTo} from 'round-to';
+import chalk from 'chalk';
+import logUpdate from 'log-update';
+import logSymbols from 'log-symbols';
+import Ora from 'ora';
 
 const cli = meow(`
 	Usage
@@ -19,28 +18,27 @@ const cli = meow(`
 	  --bytes -b    Output the result in megabytes per second (MBps)
 	  --verbose -v  Output more detailed information
 `, {
+	importMeta: import.meta,
 	flags: {
 		json: {
 			type: 'boolean',
-			alias: 'j'
+			alias: 'j',
 		},
 		bytes: {
 			type: 'boolean',
-			alias: 'b'
+			alias: 'b',
 		},
 		verbose: {
 			type: 'boolean',
-			alias: 'v'
-		}
-	}
+			alias: 'v',
+		},
+	},
 });
-
-updateNotifier({pkg: cli.pkg}).notify();
 
 const stats = {
 	ping: '',
 	download: '',
-	upload: ''
+	upload: '',
 };
 
 let state = 'ping';
@@ -74,7 +72,7 @@ function render() {
 			'',
 			'    Server   ' + (stats.data === undefined ? '' : chalk.cyan(stats.data.server.host)),
 			'  Location   ' + (stats.data === undefined ? '' : chalk.cyan(stats.data.server.location + chalk.dim(' (' + stats.data.server.country + ')'))),
-			'  Distance   ' + (stats.data === undefined ? '' : chalk.cyan(roundTo(stats.data.server.distance, 1) + chalk.dim(' km')))
+			'  Distance   ' + (stats.data === undefined ? '' : chalk.cyan(roundTo(stats.data.server.distance, 1) + chalk.dim(' km'))),
 		].join('\n');
 	}
 
@@ -96,16 +94,16 @@ function map(server) {
 	return server;
 }
 
-const st = speedtest({maxTime: 20000});
+const speedTest = speedtest({maxTime: 20_000});
 
 if (!cli.flags.json) {
 	setInterval(render, 50);
 }
 
-st.once('testserver', server => {
+speedTest.once('testserver', server => {
 	if (cli.flags.verbose) {
 		stats.data = {
-			server: map(server)
+			server: map(server),
 		};
 	}
 
@@ -114,7 +112,7 @@ st.once('testserver', server => {
 	stats.ping = cli.flags.json ? ping : chalk.cyan(ping + chalk.dim(' ms'));
 });
 
-st.on('downloadspeedprogress', speed => {
+speedTest.on('downloadspeedprogress', speed => {
 	if (state === 'download' && cli.flags.json !== true) {
 		speed *= multiplier;
 		const download = roundTo(speed, speed >= 10 ? 0 : 1);
@@ -122,7 +120,7 @@ st.on('downloadspeedprogress', speed => {
 	}
 });
 
-st.on('uploadspeedprogress', speed => {
+speedTest.on('uploadspeedprogress', speed => {
 	if (state === 'upload' && cli.flags.json !== true) {
 		speed *= multiplier;
 		const upload = roundTo(speed, speed >= 10 ? 0 : 1);
@@ -130,21 +128,21 @@ st.on('uploadspeedprogress', speed => {
 	}
 });
 
-st.once('downloadspeed', speed => {
+speedTest.once('downloadspeed', speed => {
 	setState('upload');
 	speed *= multiplier;
 	const download = roundTo(speed, speed >= 10 && !cli.flags.json ? 0 : 1);
 	stats.download = cli.flags.json ? download : chalk.cyan(download + ' ' + chalk.dim(unit));
 });
 
-st.once('uploadspeed', speed => {
+speedTest.once('uploadspeed', speed => {
 	setState('');
 	speed *= multiplier;
 	const upload = roundTo(speed, speed >= 10 && !cli.flags.json ? 0 : 1);
 	stats.upload = cli.flags.json ? upload : chalk.cyan(upload + ' ' + chalk.dim(unit));
 });
 
-st.on('data', data => {
+speedTest.on('data', data => {
 	if (cli.flags.verbose) {
 		stats.data = data;
 	}
@@ -152,12 +150,12 @@ st.on('data', data => {
 	render();
 });
 
-st.on('done', () => {
+speedTest.on('done', () => {
 	console.log();
 	process.exit();
 });
 
-st.on('error', error => {
+speedTest.on('error', error => {
 	if (error.code === 'ENOTFOUND') {
 		logError('Please check your internet connection');
 	} else {

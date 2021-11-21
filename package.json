@@ -4,14 +4,16 @@
 	"description": "Test your internet connection speed and ping using speedtest.net from the CLI",
 	"license": "MIT",
 	"repository": "sindresorhus/speed-test",
+	"funding": "https://github.com/sponsors/sindresorhus",
 	"author": {
 		"name": "Sindre Sorhus",
 		"email": "sindresorhus@gmail.com",
-		"url": "sindresorhus.com"
+		"url": "https://sindresorhus.com"
 	},
-	"bin": "cli.js",
+	"type": "module",
+	"bin": "./cli.js",
 	"engines": {
-		"node": ">=8"
+		"node": "^12.20.0 || ^14.13.1 || >=16.0.0"
 	},
 	"scripts": {
 		"test": "xo && ava"
@@ -35,18 +37,18 @@
 		"check"
 	],
 	"dependencies": {
-		"chalk": "^2.3.0",
-		"log-symbols": "^2.2.0",
-		"log-update": "^2.3.0",
-		"meow": "^5.0.0",
-		"ora": "^3.1.0",
-		"round-to": "^3.0.0",
-		"speedtest-net": "^1.2.4",
-		"update-notifier": "^2.3.0"
+		"chalk": "^4.1.2",
+		"log-symbols": "^5.0.0",
+		"log-update": "^5.0.0",
+		"meow": "^10.1.2",
+		"ora": "^6.0.1",
+		"round-to": "^6.0.0",
+		"speedtest-net": "^1.6.2"
 	},
 	"devDependencies": {
-		"ava": "^1.2.1",
-		"execa": "^1.0.0",
-		"xo": "^0.24.0"
+		"ava": "^3.15.0",
+		"execa": "^6.0.0",
+		"p-event": "^5.0.1",
+		"xo": "^0.46.4"
 	}
 }

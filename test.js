@@ -1,16 +1,11 @@
-import childProcess from 'child_process';
+import childProcess from 'node:child_process';
 import test from 'ava';
-import execa from 'execa';
+import {execa} from 'execa';
+import {pEvent} from 'p-event';
 
-test.cb('main', t => {
-	const cp = childProcess.spawn('./cli.js', {stdio: 'inherit'});
-
-	cp.on('error', t.fail);
-
-	cp.on('close', code => {
-		t.is(code, 0);
-		t.end();
-	});
+test('main', async t => {
+	const subProcess = childProcess.spawn('./cli.js', {stdio: 'inherit'});
+	t.is(await pEvent(subProcess, 'close'), 0);
 });
 
 test('--json', async t => {

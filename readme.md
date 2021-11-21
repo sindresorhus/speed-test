@@ -4,15 +4,13 @@
 
 <img src="screenshot.gif" width="404">
 
-
 ## Install
 
-Ensure you have [Node.js](https://nodejs.org) version 8+ installed. Then run the following:
+Ensure you have [Node.js](https://nodejs.org) version 12+ installed. Then run the following:
 
+```sh
+npm install --global speed-test
 ```
-$ npm install --global speed-test
-```
-
 
 ## Usage
 
@@ -28,17 +26,10 @@ $ speed-test --help
     --verbose -v  Output more detailed information
 ```
 
-
 ## Links
 
 - [Product Hunt post](https://www.producthunt.com/posts/speed-test-cli)
 
-
 ## Related
 
 - [fast-cli](https://github.com/sindresorhus/fast-cli) - Test your download speed using fast.com
-
-
-## License
-
-MIT © [Sindre Sorhus](https://sindresorhus.com)
