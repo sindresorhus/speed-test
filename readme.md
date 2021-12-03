@@ -6,7 +6,7 @@
 
 ## Install
 
-Ensure you have [Node.js](https://nodejs.org) version 12+ installed. Then run the following:
+Ensure you have [Node.js](https://nodejs.org) version 12.20+ installed. Then run the following:
 
 ```sh
 npm install --global speed-test
